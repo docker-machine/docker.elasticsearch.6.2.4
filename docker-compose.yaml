@@ -1,11 +1,11 @@
 version: '3.6'
 services:
-  es624_01:
+  kibanav6.2.4:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.2.4
-    container_name: es624_01
+    container_name: kibanav6.2.4
     restart: always
     environment:
-      - node.name=es624_01
+      - node.name=kibanav6.2.4
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ulimits:
@@ -13,19 +13,19 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - data624_01
+      - data.kibanav6.2.4
     ports:
       - 9600:9200
     networks:
-      - elastic624
+      - net.kibanav6.2.4
       - externals
 
 volumes:
-  data624_01:
+  data.kibanav6.2.4:
     driver: local
 
 networks:
-  elastic624:
+  net.kibanav6.2.4:
     driver: bridge
   externals:
     external: true

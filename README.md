@@ -1,13 +1,13 @@
 ![elasticsearch-and-kibana](screen/kibana.png)
 
-# Docker Elasticsearch AND Kibana
+# Docker Elasticsearch v6.2.4
 
 ## 一、如何使用？
 
 ### Step1: 到服务器执行clone仓库
 
 ```shell
-$ git clone git@github.com:docker-machine/docker.elasticsearch.kibana.git
+$ git clone git@github.com:docker-machine/docker.elasticsearch.6.2.4.git
 ```
 
 ### Step2: 运行docker容器链
@@ -15,7 +15,7 @@ $ git clone git@github.com:docker-machine/docker.elasticsearch.kibana.git
 进入到项目目录。
 
 ```shell script
-$ cd docker.elasticsearch.kibana
+$ cd docker.elasticsearch.6.2.4
 ```
 
 使用make命令启动容器服务链。
@@ -24,7 +24,7 @@ $ cd docker.elasticsearch.kibana
 $ make run
 ```
 
-至此，Elasticsearch服务容器链(Elasticsearch+Kibana)已经运行。
+至此，Elasticsearch服务容器已经运行。
 
 ## 二、如何停止当前容器链服务？
 
