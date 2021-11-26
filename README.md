@@ -1,5 +1,3 @@
-![elasticsearch-and-kibana](screen/kibana.png)
-
 # Docker Elasticsearch v6.2.4
 
 ## 一、如何使用？
