@@ -1,0 +1,78 @@
+version: '3.6'
+services:
+  es624_01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.4
+    container_name: es624_01
+    restart: always
+    environment:
+      - node.name=es624_01
+      - cluster.name=es-docker-cluster624
+      - discovery.seed_hosts=es624_02,es624_03
+      - cluster.initial_master_nodes=es624_01,es624_02,es624_03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - data624_01
+    ports:
+      - 9600:9200
+    networks:
+      - elastic624
+      - externals
+  es624_02:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.4
+    container_name: es624_02
+    restart: always
+    environment:
+      - node.name=es624_02
+      - cluster.name=es-docker-cluster624
+      - discovery.seed_hosts=es624_01,es624_03
+      - cluster.initial_master_nodes=es624_01,es624_02,es624_03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - data624_02
+    networks:
+      - elastic624
+      - externals
+  es624_03:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.4
+    container_name: es624_03
+    restart: always
+    environment:
+      - node.name=es624_03
+      - cluster.name=es-docker-cluster624
+      - discovery.seed_hosts=es624_01,es624_02
+      - cluster.initial_master_nodes=es624_01,es624_02,es624_03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - data624_03
+    networks:
+      - elastic624
+      - externals
+
+volumes:
+  data624_01:
+    driver: local
+  data624_02:
+    driver: local
+  data624_03:
+    driver: local
+
+networks:
+  elastic624:
+    driver: bridge
+  externals:
+    external: true

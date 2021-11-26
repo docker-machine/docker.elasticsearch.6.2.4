@@ -1,0 +1,31 @@
+version: '3.6'
+services:
+  es624_01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.4
+    container_name: es624_01
+    restart: always
+    environment:
+      - node.name=es624_01
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - data624_01
+    ports:
+      - 9600:9200
+    networks:
+      - elastic624
+      - externals
+
+volumes:
+  data624_01:
+    driver: local
+
+networks:
+  elastic624:
+    driver: bridge
+  externals:
+    external: true

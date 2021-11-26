@@ -1,0 +1,129 @@
+### |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+### Step1: 获取当前Elasticsearch索引(数据库)列表数据.
+### |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+GET http://localhost:9200/_cat/indices?v
+Accept: application/json
+
+
+
+### |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+### Step2: 添加名称为hello-world的索引到Elasticsearch.
+### |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+PUT http://localhost:9200/hello-world
+Accept: application/json
+
+
+
+### |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+### Step3: 查询名称为hello-world的索引结构.
+### |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+GET http://localhost:9200/hello-world
+Accept: application/json
+
+
+
+### |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+### Step4: 创建名称为hello-world的索引mapping(发送POST请求与JSON主体).
+### |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+# The cURL the full statement such as:
+# curl -X POST http://localhost:9200/hello-world/_mapping -H 'Content-Type:application/json' -d'
+#{
+#        "properties": {
+#            "content": {
+#                "type": "text",
+#                "analyzer": "ik_max_word",
+#                "search_analyzer": "ik_smart"
+#            }
+#        }
+#
+#}'
+POST http://localhost:9200/hello-world/_mapping
+Content-Type: application/json
+
+{
+        "properties": {
+            "content": {
+                "type": "text",
+                "analyzer": "ik_max_word",
+                "search_analyzer": "ik_smart"
+            }
+        }
+}
+###
+
+
+
+### |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+### Step5: 向名称为hello-world的索引添加一些文档(Document).
+### |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+# The cURL the full statement such as:
+# curl -X POST http://localhost:9200/hello-world/_create/1 -H 'Content-Type:application/json' -d '{"content":"美国留给伊拉克的是个烂摊子吗"}'
+POST http://localhost:9200/hello-world/_create/1
+Content-Type: application/json
+
+{"content":"美国留给伊拉克的是个烂摊子吗"}
+###
+
+# The cURL the full statement such as:
+# curl -X POST http://localhost:9200/hello-world/_create/2 -H 'Content-Type:application/json' -d '{"content":"公安部：各地校车将享最高路权"}'
+POST http://localhost:9200/hello-world/_create/2
+Content-Type: application/json
+
+{"content":"公安部：各地校车将享最高路权"}
+###
+
+# The cURL the full statement such as:
+# curl -X POST http://localhost:9200/hello-world/_create/3 -H 'Content-Type:application/json' -d '{"content":"中韩渔警冲突调查：韩警平均每天扣1艘中国渔船"}'
+POST http://localhost:9200/hello-world/_create/3
+Content-Type: application/json
+
+{"content":"中韩渔警冲突调查：韩警平均每天扣1艘中国渔船"}
+###
+
+# The cURL the full statement such as:
+# curl -X POST http://localhost:9200/hello-world/_create/4 -H 'Content-Type:application/json' -d '{"content":"中国驻洛杉矶领事馆遭亚裔男子枪击 嫌犯已自首"}'
+POST http://localhost:9200/hello-world/_create/4
+Content-Type: application/json
+
+{"content":"中国驻洛杉矶领事馆遭亚裔男子枪击 嫌犯已自首"}
+###
+
+# The cURL the full statement such as:
+# curl -X POST http://localhost:9200/hello-world/_create/5 -H 'Content-Type:application/json' -d '{"content":"缅甸中企遭打砸抢烧 中使馆回应"}'
+POST http://localhost:9200/hello-world/_create/5
+Content-Type: application/json
+
+{"content":"缅甸中企遭打砸抢烧 中使馆回应"}
+###
+
+
+
+### |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+### Step6: 带突出显示的查询.
+### |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+# The cURL the full statement,such as:
+# curl -X POST http://localhost:9200/hello-world/_search -H 'Content-Type:application/json' -d '{
+#	"query" : { "match" : { "content" : "中国" } },
+#	"highlight" : {
+#		"pre_tags" : ["<tag1>", "<tag2>"],
+#		"post_tags" : ["</tag1>", "</tag2>"],
+#		"fields" : {
+#			"content" : {}
+#		}
+#	}
+#}'
+POST http://localhost:9200/hello-world/_search
+Content-Type: application/json
+
+{
+  "query" : { "match" : { "content" : "中国" } },
+  "highlight" : {
+    "pre_tags" : ["<tag1>", "<tag2>"],
+    "post_tags" : ["</tag1>", "</tag2>"],
+    "fields" : {
+      "content" : {}
+    }
+  }
+}
+###
+
